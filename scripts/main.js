@@ -2,7 +2,6 @@ import { login, logout } from "./auth.js";
 import { loadProfile } from "./profile.js";
 import { isLoggedIn, updateTitle } from "./helpers.js";
 import { getLoginTemplate, getProfileTemplate } from "./templates.js";
-import { getName } from "./queries.js";
 
 function createAppContainer() {
     const app = document.createElement("div");
@@ -26,7 +25,6 @@ function renderLoginForm() {
             throw new Error("Login form not found in template");
         }
 
-        // Setup password toggle
         if (passwordToggle && passwordInput) {
             passwordToggle.onclick = (e) => {
                 e.preventDefault();
@@ -56,7 +54,7 @@ function renderLoginForm() {
                 submitBtn.disabled = true;
 
                 await login(identifier.value, password.value);
-                showProfile();
+                renderProfileSection();
             } catch (err) {
                 showLoginError(err.message, errorDisplay);
                 submitBtn.classList.remove("loading");
@@ -118,14 +116,10 @@ function renderProfileSection() {
     }
 }
 
-function showProfile() {
-    renderProfileSection();
-}
-
 async function initializeApp() {
     try {
         if (await isLoggedIn()) {
-            showProfile();
+            renderProfileSection();
         } else {
             renderLoginForm();
         }

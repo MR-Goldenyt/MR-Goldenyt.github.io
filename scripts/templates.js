@@ -109,16 +109,16 @@ export function getProfileTemplate() {
 
       <div id="stats-summary" class="card blended-info-card">
           <div class="blended-grid">
-              <div class="blended-column main-focus">
+              <div class="blended-column">
                   <div class="stat-content-wrapper">
                       <span class="blended-label">Current Level</span>
                       <span id="display-level" class="blended-value-hero loading-text">Loading...</span>
                   </div>
               </div>
 
-              <div class="blended-column divider-line">
+              <div class="blended-column">
                   <div class="stat-content-wrapper">
-                      <span class="blended-label">Rank</span>
+                      <span class="blended-label">Current Rank</span>
                       <div class="rank-container">
                           <span id="display-rank" class="blended-rank loading-text">Loading...</span>
                           <span id="rank-progress" class="rank-subtext loading-text">Loading...</span>
@@ -126,7 +126,7 @@ export function getProfileTemplate() {
                   </div>
               </div>
 
-              <div class="blended-column divider-line">
+              <div class="blended-column">
                   <div class="stat-content-wrapper">
                       <span class="blended-label">Audit Ratio</span>
                       <span id="display-ratio" class="blended-value-large gold-text loading-text">Loading...</span>
@@ -136,7 +136,7 @@ export function getProfileTemplate() {
                   </div>
               </div>
 
-              <div class="blended-column divider-line">
+              <div class="blended-column">
                   <div class="stat-content-wrapper">
                       <div class="milestone-icon">🏆</div>
                       <div class="detail-text">
@@ -145,7 +145,6 @@ export function getProfileTemplate() {
                       </div>
                   </div>
               </div>
-
           </div>
       </div>
 
