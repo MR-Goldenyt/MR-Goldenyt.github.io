@@ -25,7 +25,7 @@ export function logout() {
 
 export const fetchJWT = async (identifier, password) => {
     const encoded_creds = btoa(identifier+":"+password);
-    const token = await fetch("https://learn.reboot01.com/api/auth/signin", {
+    const token = await fetch(SIGNIN_URL, {
         "method": "POST",
         "headers": {"Authorization": `Basic ${encoded_creds}`}
     })

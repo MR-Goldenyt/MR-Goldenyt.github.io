@@ -12,8 +12,6 @@ import {
 export async function loadProfile() {
     try {
         await loadUserInfo();
-        await loadXpData();
-        await loadResultsData();
     } catch (error) {
         console.error("Error loading profile:", error);
         throw new Error(`Failed to load profile: ${error.message}`);
@@ -88,78 +86,3 @@ function updateStat(id, value) {
     }
 }
 
-async function loadXpData() {
-  try {
-    // Fetch XP transactions (replace graphql() with your actual fetch method)
-    const xpData = await graphql(`
-      {
-        transaction(where: { type: { _eq: "xp" } }) {
-          amount
-          createdAt
-        }
-      }
-    `);
-
-    const transactions = xpData.transaction || [];
-    if (transactions.length === 0) {
-      throw new Error("No XP transactions found");
-    }
-
-    // Calculate total XP
-    const totalXp = transactions.reduce((sum, t) => sum + (t.amount || 0), 0);
-
-    // Display total XP
-    const totalXpElement = document.getElementById("total-xp");
-    totalXpElement.textContent = totalXp.toLocaleString();
-    totalXpElement.classList.remove("loading");
-
-    // Calculate level (matches your platform)
-    let level = 1;
-    let xpForNext = 1000; // starting XP needed for level 2
-    while (totalXp >= xpForNext) {
-      level++;
-      xpForNext = Math.floor((level ** 2) * 1000);
-    }
-
-    // Display level
-    const levelElement = document.getElementById("level");
-    levelElement.textContent = level;
-    levelElement.classList.remove("loading");
-    drawXpGraph(transactions);
-  } catch (error) {
-    console.error("Error loading XP data:", error);
-  }
-
-}
-
-
-async function loadResultsData() {
-    try {
-        const resultData = await graphql(`{ result { grade } }`);
-
-        const results = resultData.result || [];
-        let passCount = 0;
-        let failCount = 0;
-
-        results.forEach(result => {
-            if (result.grade >= 1) {
-                passCount++;
-            } else {
-                failCount++;
-            }
-        });
-
-        const passElement = document.getElementById("pass-count");
-        const failElement = document.getElementById("fail-count");
-
-        if (passElement) passElement.textContent = passCount;
-        if (failElement) failElement.textContent = failCount;
-
-        if (passCount + failCount > 0) {
-            drawPassFailGraph(passCount, failCount);
-        }
-    } catch (error) {
-        console.error("Error loading results data:", error);
-        throw error;
-    }
-}

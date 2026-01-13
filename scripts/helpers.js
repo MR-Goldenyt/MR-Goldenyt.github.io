@@ -27,3 +27,7 @@ export const getJWT = () => {
 export const clearJWT = () => {
     localStorage.removeItem(JWT_KEY);
 }
+
+export const updateTitle = (state) => {
+    document.title = `GraphQL - ${state}`;
+}

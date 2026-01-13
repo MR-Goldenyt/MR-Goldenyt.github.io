@@ -1,6 +1,6 @@
 import { login, logout } from "./auth.js";
 import { loadProfile } from "./profile.js";
-import { isLoggedIn } from "./helpers.js";
+import { isLoggedIn, updateTitle } from "./helpers.js";
 import { getLoginTemplate, getProfileTemplate } from "./templates.js";
 import { getName } from "./queries.js";
 
@@ -94,8 +94,6 @@ function renderProfileSection() {
             location.reload();
         };
 
-        initSmoothScroll();
-
         loadProfile()
             .catch(error => {
                 console.error("Profile loading error:", error);
@@ -120,46 +118,13 @@ function renderProfileSection() {
     }
 }
 
-function updateTitle(state) {
-    document.title = `GraphQL - ${state}`;
-}
-
-function initSmoothScroll() {
-    const scrollMap = {
-        '.btn-stats': 'pass-count',    // Maps class to target ID
-        '.btn-progress': 'level',      // Maps class to target ID
-        '.btn-graphs': 'xp-graph'      // Maps class to target ID
-    };
-
-    Object.keys(scrollMap).forEach(selector => {
-        const btn = document.querySelector(selector);
-        if (btn) {
-            btn.onclick = (e) => {
-                e.preventDefault();
-                const target = document.getElementById(scrollMap[selector]);
-                if (target) {
-                    const headerOffset = 100; // Adjust based on your header height
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            };
-        }
-    });
-}
-
 function showProfile() {
     renderProfileSection();
 }
 
-
-function initializeApp() {
+async function initializeApp() {
     try {
-        if (isLoggedIn()) {
+        if (await isLoggedIn()) {
             showProfile();
         } else {
             renderLoginForm();
