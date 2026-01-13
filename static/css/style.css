@@ -761,9 +761,13 @@ body {
 }
 
 .blended-value-large {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 5rem);
     font-weight: 800;
     color: #fff;
+}
+
+#display-level {
+    margin-bottom: 2vh;
 }
 
 .blended-rank {
@@ -782,6 +786,16 @@ body {
     opacity: 0.7;
 }
 
+#display-ratio.blended-value-large {
+    font-size: clamp(2.5rem, 4vw, 4.5rem); 
+    font-weight: 800;
+    color: #ffbc00;
+    line-height: 1;
+    display: block;
+    margin: 0;
+    filter: drop-shadow(0 0 15px rgba(255, 188, 0, 0.4));
+}
+
 .gold-text {
     color: #ffbc00;
 }
@@ -793,10 +807,7 @@ body {
 
 .ratio-bar-wrapper {
     width: 100%;
-    margin-top: 1rem;
 }
-
-
 
 .milestone-icon {
     font-size: 2rem;
