@@ -140,7 +140,7 @@ export function getProfileTemplate() {
                   <div class="stat-content-wrapper">
                       <div class="milestone-icon">🏆</div>
                       <div class="detail-text">
-                          <span class="blended-label">Last Project Completed</span>
+                          <span class="blended-label">Last Victory</span>
                           <span id="display-last-project" class="detail-val loading-text">Loading...</span>
                       </div>
                   </div>
@@ -148,26 +148,14 @@ export function getProfileTemplate() {
           </div>
       </div>
 
-      <div class="card">
-        <h2>Level</h2>
-        <p id="level" class="loading">Loading...</p>
-      </div>
-
-      <div class="card">
-        <h2>Results</h2>
-        <p>Pass: <span id="pass-count">0</span></p>
-        <p>Fail: <span id="fail-count">0</span></p>
-      </div>
-
-      <div class="card">
-        <h2>XP Over Time</h2>
-        <svg id="xp-graph" width="600" height="200"></svg>
-      </div>
-
-      <div class="card">
-        <h2>Pass/Fail Ratio</h2>
-        <svg id="passfail-graph" width="200" height="200"></svg>
-      </div>
+      <div id="skills-section" class="card blended-info-card">
+        <div class="skill-header">
+            <h2 class="blended-label" style="text-align: center; width: 100%; margin-bottom: 4vh;">Skill Progress</h2>
+        </div>
+        <div id="radar-container" class="skills-flex-container">
+            <div class="loading-text">Synchronizing Skill Tree...</div>
+        </div>
+    </div>
     </section>
   `;
 }

@@ -1,12 +1,12 @@
-import { graphql } from "./queries.js";
 import { drawXpGraph } from "./xpGraph.js";
-import { drawPassFailGraph } from "./passFailGraph.js";
+import { drawSkills } from "./skillsProgress.js";
 import { 
     getName, 
     getLevel, 
     getRankData, 
     getAuditRatio, 
-    getLastProject 
+    getLastProject,
+    getSkillsXp 
 } from "./queries.js";
 
 export async function loadProfile() {
@@ -25,23 +25,23 @@ async function loadUserInfo() {
             level, 
             rankInfo, 
             ratio, 
-            lastProject
+            lastProject,
+            skillsData
         ] = await Promise.all([
             getName(),
             getLevel(),
             getRankData(),
             getAuditRatio(),
-            getLastProject()
+            getLastProject(),
+            getSkillsXp()
         ]);
 
-        // 1. Identity Focus
         const [firstName, lastName] = nameData;
         const nameElement = document.getElementById("login-name");
         if (nameElement) {
             nameElement.textContent = `Welcome, ${firstName} ${lastName}`;
         }
 
-        // 2. Level Section (Hero Size)
         updateStat('display-level', level);
 
         updateStat('display-rank', rankInfo.currentRank);
@@ -72,6 +72,8 @@ async function loadUserInfo() {
             .join(' ');
             
         updateStat('display-last-project', cleanProjectName);
+
+        drawSkills(skillsData);
 
     } catch (error) {
         console.error("Error populating stats:", error);

@@ -575,7 +575,7 @@ body {
     backdrop-filter: blur(15px);
     border-top: 1px solid rgba(60, 162, 244, 0.2);
     border-bottom: 1px solid rgba(60, 162, 244, 0.2);
-    padding: 12px 5%;
+    padding: 0.8vw 2vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -787,7 +787,7 @@ body {
 }
 
 #display-ratio.blended-value-large {
-    font-size: clamp(2.5rem, 4vw, 4.5rem); 
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
     font-weight: 800;
     color: #ffbc00;
     line-height: 1;
@@ -801,6 +801,7 @@ body {
 }
 
 .detail-val {
+    font-size: clamp(0.7rem, 2.5vw, 1.5rem);
     font-weight: 700;
     color: #fff;
 }
@@ -820,6 +821,57 @@ body {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.2vw;
+}
+
+.skills-flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8vw;
+    width: 95%;
+    max-width: 1300px;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+.radar-chart-group {
+    flex: 1;
+    min-width: 350px;
+    max-width: 550px;
+}
+
+.radar-chart-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #3CA2F4;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.radar-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
+
+.radar-grid {
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
+    fill: none;
+}
+
+.radar-label-text {
+    fill: #b0bec5;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'Segoe UI', sans-serif;
+    pointer-events: none;
+}
+
+.radar-area {
+    transition: all 0.4s ease;
 }
 
 #login-name {
@@ -852,12 +904,6 @@ body {
 .card p {
     color: #b0bec5;
     font-size: clamp(13px, 2.5vw, 15px);
-}
-
-.card svg {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
 }
 
 .loading {
@@ -903,6 +949,15 @@ body {
 
     .blended-column:nth-child(-n+2) {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .skills-flex-container {
+        flex-direction: column;
+        gap: 60px;
+    }
+    .radar-chart-group {
+        width: 100%;
+        max-width: 500px;
     }
 }
 
