@@ -3,7 +3,7 @@ const SKILL_CATEGORIES = {
     technology: ['go', 'js', 'html', 'sql', 'css', 'unix', 'docker', 'rust', 'ruby', 'python']
 };
 
-export function drawSkills(skillsData) {
+export const drawSkills = (skillsData) => {
     const container = document.getElementById('radar-container');
     if (!container) return;
     const globalMax = Math.max(...Object.values(skillsData)) || 100;
@@ -51,7 +51,7 @@ function createRadar(data, title, color) {
         return (Math.sqrt(value) / chartMax) * radius;
     };
 
-    let svg = `<svg viewBox="0 0 ${viewBoxSize} ${viewBoxSize}" preserveAspectRatio="xMidYMid meet" class="radar-svg" style="overflow: visible; width: 100%;">`;
+    let svg = `<svg viewBox="0 0 ${viewBoxSize} ${viewBoxSize}" preserveAspectRatio="xMidYMid meet" class="radar-svg">`;
 
     // 1. Grid Rings
     for (let i = 1; i <= levels; i++) {

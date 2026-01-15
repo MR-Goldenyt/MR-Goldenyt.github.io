@@ -3,7 +3,7 @@ import { getJWT } from "./helpers.js";
 const GRAPHQL_API = "https://learn.reboot01.com/api/graphql-engine/v1/graphql";
 const ErrorMsg = "Error 401 Unauthorized - Invalid or expired token";
 
-export const graphql = async(query) => {
+export const graphql = async (query) => {
     try {
         const token = getJWT();
         if (!token) {
@@ -145,30 +145,27 @@ export const getAuditRatio = async () => {
     const userId = await getid();
     const query = `
     query {
-        upTransactions: transaction(
-            where: { userId: { _eq: ${userId} }, type: { _eq: "up" } }
-            order_by: { createdAt: desc }
-        ) {
-            amount
-        }
-
-        downTransactions: transaction(
-            where: { userId: { _eq: ${userId} }, type: { _eq: "down" } }
-            order_by: { createdAt: desc }
-        ) {
-            amount
-        }
+      up: transaction_aggregate(where: { userId: { _eq: ${userId} }, type: { _eq: "up" } }) {
+        aggregate { sum { amount } }
+      }
+      down: transaction_aggregate(where: { userId: { _eq: ${userId} }, type: { _eq: "down" } }) {
+        aggregate { sum { amount } }
+      }
     }
     `;
     const data = await graphql(query);
     if (!data) {
         throw new Error(ErrorMsg);
     }
-    
-    const totalXpUp = data.upTransactions.reduce((sum, audit) => sum + audit.amount, 0);
-    const totalXpDown = data.downTransactions.reduce((sum, audit) => sum + audit.amount, 0);
 
-    return Math.round((totalXpUp/totalXpDown)*10/10).toFixed(1);
+    const up = data.up.aggregate.sum.amount || 0;
+    const down = data.down.aggregate.sum.amount || 0;
+
+    if (down === 0) return "0.0";
+
+    const ratio = up / down;
+
+    return (Math.round(ratio * 10) / 10).toFixed(1);
 }
 
 export const getLastProject = async () => {
@@ -192,7 +189,10 @@ export const getLastProject = async () => {
     if (!data) {
         throw new Error(ErrorMsg);
     }
-    return data.transaction[0].object.name;
+
+    const lastProject = data?.transaction[0]?.object?.name ?? "No Victory yet";
+    
+    return lastProject;
 }
 
 export const getSkillTypes = async () => {
@@ -223,7 +223,7 @@ export const getSkillsXp = async () => {
     let query = "query SkillSums {";
     for (const type of types) {
         query += `
-        ${type.replace("-","_")}: transaction_aggregate(where: { type: { _eq: "skill_${type}" } }) {
+        ${type.replace("-", "_")}: transaction_aggregate(where: { type: { _eq: "skill_${type}" } }) {
             aggregate { sum { amount } }
         }
 
@@ -234,13 +234,13 @@ export const getSkillsXp = async () => {
     if (!data) {
         throw new Error(ErrorMsg);
     }
-    
+
     let results = {};
     for (const type of types) {
         // @ts-ignore
-        results[type] = data[type.replace("-","_")].aggregate.sum.amount;
+        results[type] = data[type.replace("-", "_")].aggregate.sum.amount;
     }
-        return results;
+    return results;
 }
 
 export const getXpOverTime = async () => {

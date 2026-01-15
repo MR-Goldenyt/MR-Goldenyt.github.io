@@ -1,4 +1,4 @@
-export function getLoginTemplate() {
+export const getLoginTemplate = () => {
   return `
     <div class="bg">
       <div class="floating-shapes">
@@ -32,11 +32,6 @@ export function getLoginTemplate() {
               <div class="input-decoration"></div>
               <input type="text" id="identifier" name="identifier" required autocomplete="username">
               <label for="identifier">Username or Email</label>
-              <div class="input-waves">
-                <div class="wave wave-1"></div>
-                <div class="wave wave-2"></div>
-                <div class="wave wave-3"></div>
-              </div>
             </div>
           </div>
 
@@ -48,11 +43,6 @@ export function getLoginTemplate() {
               <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
                 <span class="toggle-icon"></span>
               </button>
-              <div class="input-waves">
-                <div class="wave wave-1"></div>
-                <div class="wave wave-2"></div>
-                <div class="wave wave-3"></div>
-              </div>
             </div>
             <span class="error-message" id="login-error"></span>
           </div>
@@ -76,12 +66,12 @@ export function getLoginTemplate() {
   `;
 }
 
-export function getProfileTemplate() {
+export const getProfileTemplate = () => {
   return `
     <header class="main-header">
         <div class="header-left">
             <img src="https://learn.reboot01.com/assets/img/logo.png" alt="Logo" class="header-logo">
-            <span class="header-title">GraphQL Intra Dashboard</span>
+            <span id="header-title" class="header-title">GraphQL Intra Dashboard</span>
         </div>
         <button id="logout" class="logout-btn">Logout</button>
     </header>
@@ -155,7 +145,21 @@ export function getProfileTemplate() {
         <div id="radar-container" class="skills-flex-container">
             <div class="loading-text">Synchronizing Skill Tree...</div>
         </div>
-    </div>
+      </div>
+
+      <div id="xp-timeline-section" class="card blended-info-card">
+          <div class="skill-header">
+              <h2 class="blended-label" style="text-align: center;">XP Graph</h2>
+              <div class="slider-container" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+                  <span class="blended-label" style="font-size: 12px; opacity: 0.7;">Date Points:</span>
+                  <input type="range" id="date-density-slider" min="2" max="8" value="4" step="1" style="cursor: pointer;">
+                  <span id="slider-val" class="blended-label" style="font-size: 12px; color: #ffbc00;">4</span>
+              </div>
+          </div>
+          <div id="xp-graph-container">
+              <div class="loading-text">Generating Timeline...</div>
+          </div>
+      </div>
     </section>
   `;
 }

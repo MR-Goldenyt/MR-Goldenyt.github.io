@@ -2,7 +2,7 @@ import { setJWT, clearJWT } from "./helpers.js";
 
 const SIGNIN_URL = "https://learn.reboot01.com/api/auth/signin";
 
-export async function login(identifier, password) {
+export const login = async (identifier, password) => {
     try {
         if (!identifier || !password) {
             throw new Error("Username and password are required");
@@ -19,7 +19,7 @@ export async function login(identifier, password) {
     }
 }
 
-export function logout() {
+export const logout = () => {
     clearJWT();
 }
 
