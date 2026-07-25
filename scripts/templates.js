@@ -80,7 +80,7 @@ export const getProfileTemplate = () => {
       <div class="welcome-message-card card">
           <div class="welcome-content">
               <div class="welcome-text">
-                  <h1 id="login-name" class="welcome-title">Welcome, Yousif Muhammad</h1>
+                  <h1 id="login-name" class="welcome-title">Welcome</h1>
                   <p class="welcome-subtitle">
                       Analyze your Statistics, monitor your Skill Progress, and review your XP graph.
                   </p>
